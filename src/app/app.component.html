@@ -1,3 +1,14 @@
-<h1>
-  {{title}}
-</h1>
+<div style="margin: 5px; display: inline" *ngFor="let f of forms;let i=index;">
+  <button class="btn btn-primary btn-sm"
+          (click)="getForm(f['name'],f['version'])">{{f.name}} {{f.version}}
+  </button>
+</div>
+
+<ehr-form-description-renderer [formConfig]="formConfig"
+                               #renderer>
+</ehr-form-description-renderer>
+<div *ngIf="formDescription">
+
+  <button (click)="postComposition()">Post</button>
+  <button (click)="putComposition()">Put</button>
+</div>

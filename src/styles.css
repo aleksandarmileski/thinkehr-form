@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~thinkehr-forms/src/_ehr-form-base-styles.scss";
+
+ehr-form {
+@import "~thinkehr-forms/src/theme/all-gray.scss";
+}
