@@ -9,6 +9,27 @@ import {validate} from "codelyzer/walkerFactory/walkerFn";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  tabs: any = [{
+    tag: 'tab1',
+    name: 'Main diagnosis'
+  },
+    {
+      tag: 'tab2',
+      name: 'General status'
+    },
+    {
+      tag: 'tab3',
+      name: 'Social Amnesis'
+    },
+    {
+      tag: 'tab4',
+      name: 'Associated diseases'
+    },
+    {
+      tag: 'tab5',
+      name: 'Procedures'
+    }];
+  selectedTab = this.tabs[0];
   form = forma;
 
   @ViewChild('renderer')
@@ -29,6 +50,22 @@ export class AppComponent implements OnInit {
 
   }
 
+  setActiveTab(tab){
+    if(this.selectedTab){
+      this.toggleTag(this.selectedTab, false)
+    }
+    this.toggleTag(tab, true);
+    this.selectedTab = tab;
+  }
+  toggleTag(tab, shown){
+    console.log(tab, "?!?!?!?!")
+    tab.model.viewConfig.setHidden(!shown);
+  }
+
+  getRenderer(){
+    console.log(this.renderer, "hehehe")
+    this.initialize();
+  }
   ngOnInit() {
     this.basicService.getForms()
       .subscribe(response => {
@@ -67,12 +104,64 @@ export class AppComponent implements OnInit {
                 //   layout[0]['children'][0]['rows'][0]['cols'][0]['children'].unshift(layout[0]['children'][0]['rows'][0]['cols'][0]['children'][0])
                 // }
                 this.formConfig = {description: desc, layout: layout}
+                setTimeout(() => {
+                  this.initialize();
+                }, 200)
+
                 // console.log(this.formConfig)
               });
           });
       })
   }
+  mypath: string;
+  findMe(path?: string): any{
+    this.getChildByPath(this.renderer.formRootModel.childModels, path);
+  }
 
+  initialize(){
+
+    this.tabs.forEach((tab, index) => {
+      console.log(tab.tag, "???")
+      let model = this.renderer.formRootModel.findModelWithTag(tab.tag);
+      if(tab.tag != this.selectedTab.tag){
+        model.viewConfig.setHidden(true)
+      }
+      this.tabs[index].model = model;
+    })
+
+    console.log(this.tabs, "stupid shit.")
+
+  }
+
+  changeMe(path: string){
+    let node = this.findMe(path);
+    console.log(node, "xxxxxxxxxxx")
+    // node.value[0]['|magnitude'] = 232;
+    // console.log(node, "LOL")
+  }
+  hideMe(path){
+  }
+  //this.renderer.formRootModel.childModels
+  getChildByPath(childModels: any[], path = 'kolbas'){
+    let node = this.findNodeByPath(childModels, path);
+    if(!node){
+      return childModels.forEach(model => this.getChildByPath(model.childModels, path))
+    } else {
+        node.viewConfig.setHidden(true)
+      // console.log("I FOUND THE GUY", node);
+      //  node.value[0]['|magnitude'] = 232;
+      // console.log("I FOUND THE GUY", node);
+
+      return node;
+    }
+  }
+
+  findNodeByPath(children, path){
+    return children.find(i => {
+        if(path == 'kolbas')console.log(i.aqlPath);
+        return i.aqlPath == path
+      })   || null;
+  }
   postComposition() {
     // console.log(this.values.allergies['adverse_reaction_-_allergy.v1'] = this.values.allergies['adverse_reaction_-_allergy']  , 'values');
     console.log(this.values)

@@ -4,3 +4,11 @@
 ehr-form {
 @import "~thinkehr-forms/src/theme/all-gray.scss";
 }
+.no-border {
+  border: 0!important;
+}
+
+.wrapper {
+  border: 1px solid grey;
+  padding: 10px;
+}

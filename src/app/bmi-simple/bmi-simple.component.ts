@@ -42,6 +42,7 @@ export class BmiSimpleComponent implements OnDestroy, EhrFormCustomComponent {
   protected connectValues(customModel: CustomModel): void {
 
     if (customModel) {
+      console.log(customModel, "model")
       let targetW: QuantityFieldModel = customModel.findModelWithTag('weight', true) as QuantityFieldModel;
       let targetH: QuantityFieldModel = customModel.findModelWithTag('height', true) as QuantityFieldModel;
 
