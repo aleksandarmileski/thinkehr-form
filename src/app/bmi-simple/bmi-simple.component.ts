@@ -65,7 +65,7 @@ export class BmiSimpleComponent implements OnDestroy, EhrFormCustomComponent {
     }
   }
 
-  protected modelValue$: Observable<string>;
+  modelValue$: Observable<string>;
 
   protected modelSubscriptions: Subscription[] = [];
 

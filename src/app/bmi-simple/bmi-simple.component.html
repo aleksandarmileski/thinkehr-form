@@ -5,7 +5,7 @@
   <!--<mrd-field-label>BMI</mrd-field-label>-->
   <mrd-field-content>
     <span *ngIf="(modelValue$|async)>10 && (modelValue$|async)<40">
-      <h3 style="display: inline">{{modelValue$|async}}</h3>
+      BMI: <h3 style="display: inline">{{modelValue$|async}}</h3>
       <h4 style="float: right" [ngClass]="styleBmi(modelValue$|async)">{{styleBmi(modelValue$|async)}}</h4>
     </span>
   </mrd-field-content>

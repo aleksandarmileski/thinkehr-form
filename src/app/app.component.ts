@@ -50,22 +50,24 @@ export class AppComponent implements OnInit {
 
   }
 
-  setActiveTab(tab){
-    if(this.selectedTab){
+  setActiveTab(tab) {
+    if (this.selectedTab) {
       this.toggleTag(this.selectedTab, false)
     }
     this.toggleTag(tab, true);
     this.selectedTab = tab;
   }
-  toggleTag(tab, shown){
-    console.log(tab, "?!?!?!?!")
+
+  toggleTag(tab, shown) {
+    // console.log(tab, "?!?!?!?!")
     tab.model.viewConfig.setHidden(!shown);
   }
 
-  getRenderer(){
-    console.log(this.renderer, "hehehe")
+  getRenderer() {
+    // console.log(this.renderer, "hehehe")
     this.initialize();
   }
+
   ngOnInit() {
     this.basicService.getForms()
       .subscribe(response => {
@@ -113,41 +115,43 @@ export class AppComponent implements OnInit {
           });
       })
   }
+
   mypath: string;
-  findMe(path?: string): any{
+
+  findMe(path?: string): any {
     this.getChildByPath(this.renderer.formRootModel.childModels, path);
   }
 
-  initialize(){
+  initialize() {
 
     this.tabs.forEach((tab, index) => {
-      console.log(tab.tag, "???")
+      // console.log(tab.tag, "???")
       let model = this.renderer.formRootModel.findModelWithTag(tab.tag);
-      if(tab.tag != this.selectedTab.tag){
+      if (tab.tag != this.selectedTab.tag) {
         model.viewConfig.setHidden(true)
       }
       this.tabs[index].model = model;
     })
 
-    console.log(this.tabs, "stupid shit.")
-
   }
 
-  changeMe(path: string){
+  changeMe(path: string) {
     let node = this.findMe(path);
-    console.log(node, "xxxxxxxxxxx")
+    // console.log(node, "xxxxxxxxxxx")
     // node.value[0]['|magnitude'] = 232;
     // console.log(node, "LOL")
   }
-  hideMe(path){
+
+  hideMe(path) {
   }
+
   //this.renderer.formRootModel.childModels
-  getChildByPath(childModels: any[], path = 'kolbas'){
+  getChildByPath(childModels: any[], path = 'kolbas') {
     let node = this.findNodeByPath(childModels, path);
-    if(!node){
+    if (!node) {
       return childModels.forEach(model => this.getChildByPath(model.childModels, path))
     } else {
-        node.viewConfig.setHidden(true)
+      node.viewConfig.setHidden(true)
       // console.log("I FOUND THE GUY", node);
       //  node.value[0]['|magnitude'] = 232;
       // console.log("I FOUND THE GUY", node);
@@ -156,12 +160,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  findNodeByPath(children, path){
+  findNodeByPath(children, path) {
     return children.find(i => {
-        if(path == 'kolbas')console.log(i.aqlPath);
+        if (path == 'kolbas') console.log(i.aqlPath);
         return i.aqlPath == path
-      })   || null;
+      }) || null;
   }
+
   postComposition() {
     // console.log(this.values.allergies['adverse_reaction_-_allergy.v1'] = this.values.allergies['adverse_reaction_-_allergy']  , 'values');
     console.log(this.values)
